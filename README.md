@@ -31,27 +31,53 @@ This document contains the following details:
 ​
 The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the D*mn Vulnerable Web Application.
 ​
+
 Load balancing ensures that the application will be highly available, in addition to restricting inbound to the network.
--What aspect of security do load balancers protect? 
+
+  What aspect of security do load balancers protect? 
+
 According to Azure security baseline for Azure Load Balancer, the load balancer's main purpose is to distribute web traffic across multiple servers. In our network, the load balancer was installed in front of the VM to
-  protect Azure resources within virtual networks.
-  monitor and log the configuration and traffic of virtual networks, subnets, and NICs.
-  protect critical web applications
-  deny communications with known malicious IP addresses
-  record network packets
-  deploy network-based intrusion detection/intrusion prevention systems (IDS/IPS)
-  manage traffic to web applications
-  minimize complexity and administrative overhead of network security rules
-  maintain standard security configurations for network devices
-  document traffic configuration rules
-  use automated tools to monitor network resource configurations and detect changes
+  
+    protect Azure resources within virtual networks.
+  
+    monitor and log the configuration and traffic of virtual networks, subnets, and NICs.
+  
+   protect critical web applications
+  
+    deny communications with known malicious IP addresses
+  
+    record network packets
+  
+    deploy network-based intrusion detection/intrusion prevention systems (IDS/IPS)
+  
+    manage traffic to web applications
+   
+    minimize complexity and administrative overhead of network security rules
+  
+     maintain standard security configurations for network devices
+  
+    document traffic configuration rules
+  
+    use automated tools to monitor network resource configurations and detect changes
 
 What is the advantage of a jump box?
-​
-Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the _____ and system _____.
-- _TODO: What does Filebeat watch for?_
-- _TODO: What does Metricbeat record?_
-​
+
+
+  ​A Jump Box or a "Jump Server" is a gateway on a network used to access and manage devices in different security zones. A Jump Box acts as a "bridge" between two       trusted networks zones and provides a controlled way to access them. We can block the public IP address associated with the VM. It helps to improve security also       prevents all Azure VM’s to expose to the public.
+  
+  
+  Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to their file systems and system metrics such as priviledge escalation         failure, SSH logins activity, CPU and memory usage, etc.
+  
+  
+What does Filebeat watch for?
+
+  Filebeat helps keep things simple by offering a lightweight way (low memory footprint) to forward and centralize logs, files and watches for changes.
+  
+
+What does Metricbeat record?
+
+​Filebeat helps keep things simple by offering a lightweight way (low memory footprint) to forward and centralize logs, files and watches for changes.
+
 The configuration details of each machine may be found below.
 _Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdown_tables) to add/remove values from the table_.
 ​
