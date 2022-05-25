@@ -17,6 +17,7 @@ https://github.com/ICohen06/ELK-Stack-Project-IMC/blob/main/Ansible/metricbeat-c
 
 https://github.com/ICohen06/ELK-Stack-Project-IMC/blob/main/Ansible/metricbeat-playbook.yml
 ​
+
 This document contains the following details:
 - Description of the Topologu
 - Access Policies
