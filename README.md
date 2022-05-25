@@ -31,8 +31,22 @@ This document contains the following details:
 ​
 The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the D*mn Vulnerable Web Application.
 ​
-Load balancing ensures that the application will be highly _____, in addition to restricting _____ to the network.
-- _TODO: What aspect of security do load balancers protect? What is the advantage of a jump box?_
+Load balancing ensures that the application will be highly available, in addition to restricting inbound to the network.
+-What aspect of security do load balancers protect? 
+According to Azure security baseline for Azure Load Balancer, the load balancer's main purpose is to distribute web traffic across multiple servers. In our network, the load balancer was installed in front of the VM to
+  protect Azure resources within virtual networks.
+  monitor and log the configuration and traffic of virtual networks, subnets, and NICs.
+  protect critical web applications
+  deny communications with known malicious IP addresses
+  record network packets
+  deploy network-based intrusion detection/intrusion prevention systems (IDS/IPS)
+  manage traffic to web applications
+  minimize complexity and administrative overhead of network security rules
+  maintain standard security configurations for network devices
+  document traffic configuration rules
+  use automated tools to monitor network resource configurations and detect changes
+
+What is the advantage of a jump box?
 ​
 Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the _____ and system _____.
 - _TODO: What does Filebeat watch for?_
