@@ -157,6 +157,18 @@ After creating the new VM in Azure, verify that it works as expected by connecti
 
 ![image](https://user-images.githubusercontent.com/106039539/170531439-f19738ea-a903-4f77-8b2f-d381618ab50e.png)
 
+Copy the SSH key from the Ansible container on our jump box:
+  RUN cat id_rsa.pub Configure a new VM using that SSH key:
+  
+![image](https://user-images.githubusercontent.com/106039539/170565306-b69f5719-4fcd-49e3-9c01-34a48075c6b7.png)
+
+Created an Ansible play to install and configure an ELK instance.
+In this step, we have to:
+
+Add new VM to the Ansible hosts file.
+Create a new Ansible playbook to use for our new ELK virtual machine.
+From our Ansible container, add the new VM to Ansible's hosts file.
+  RUN nano /etc/ansible/hosts and put our IP with ansible_python_interpreter=/usr/bin/python3
 
 The playbook implements the following tasks:
 - 
