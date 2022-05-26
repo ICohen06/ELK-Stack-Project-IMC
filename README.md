@@ -38,32 +38,32 @@ Load balancing ensures that the application will be highly available, in additio
 
 According to Azure security baseline for Azure Load Balancer, the load balancer's main purpose is to distribute web traffic across multiple servers. In our network, the load balancer was installed in front of the VM to
   
-    ​protect Azure resources within virtual networks.
+   -  protect Azure resources within virtual networks.
   
-    ​monitor and log the configuration and traffic of virtual networks, subnets, and NICs.
+   - monitor and log the configuration and traffic of virtual networks, subnets, and NICs.
   
-    ​protect crticial web applications
+   - protect crticial web applications
   
-    ​deny communications with known malicious IP addresses
+   - deny communications with known malicious IP addresses
   
-    ​record network packets
+   - record network packets
   
-    ​deploy network-based intrusion detection/intrusion prevention systems (IDS/IPS)
+   -  deploy network-based intrusion detection/intrusion prevention systems (IDS/IPS)
   
-    ​manage traffic to web applications
+   - manage traffic to web applications
    
-    ​minimize complexity and administrative overhead of network security rules
+   - minimize complexity and administrative overhead of network security rules
   
-    ​maintain standard security configurations for network devices
+   - maintain standard security configurations for network devices
   
-    ​document traffic configuration rules
+   - document traffic configuration rules
   
-    ​use automated tools to monitor network resource configurations and detect changes
+   - use automated tools to monitor network resource configurations and detect changes
 
 What is the advantage of a jump box?
 
 
-  ​A Jump Box or a "Jump Server" is a gateway on a network used to access and manage devices in different security zones. A Jump Box acts as a "bridge" between two       trusted networks zones and provides a controlled way to access them. We can block the public IP address associated with the VM. It helps to improve security also       prevents all Azure VM’s to expose to the public.
+  -    A Jump Box or a "Jump Server" is a gateway on a network used to access and manage devices in different security zones. A Jump Box acts as a "bridge" between two       trusted networks zones and provides a controlled way to access them. We can block the public IP address associated with the VM. It helps to improve security also       prevents all Azure VM’s to expose to the public.
   
   
   Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to their file systems and system metrics such as priviledge escalation         failure, SSH logins activity, CPU and memory usage, etc.
@@ -71,12 +71,12 @@ What is the advantage of a jump box?
   
 What does Filebeat watch for?
 
-  Filebeat helps keep things simple by offering a lightweight way (low memory footprint) to forward and centralize logs, files and watches for changes.
+  -  Filebeat helps keep things simple by offering a lightweight way (low memory footprint) to forward and centralize logs, files and watches for changes.
   
 
 What does Metricbeat record?
 
-​Filebeat helps keep things simple by offering a lightweight way (low memory footprint) to forward and centralize logs, files and watches for changes.
+-  Filebeat helps keep things simple by offering a lightweight way (low memory footprint) to forward and centralize logs, files and watches for changes.
 
 The configuration details of each machine may be found below.
 
@@ -117,9 +117,9 @@ What is the main advantage of automating configuration with Ansible?
 
 We will configure an ELK server within virtual network. Specifically,
 
-  Deployed a new VM on our virtual network.
-  Created an Ansible play to install and configure an ELK instance.
-  Restricted access to the new server.
+  -  Deployed a new VM on our virtual network.
+  -  Created an Ansible play to install and configure an ELK instance.
+  -  Restricted access to the new server.
   
   
  Deployed a new VM on our virtual network.
@@ -165,22 +165,93 @@ Copy the SSH key from the Ansible container on our jump box:
 Created an Ansible play to install and configure an ELK instance.
 In this step, we have to:
 
-Add new VM to the Ansible hosts file.
-Create a new Ansible playbook to use for our new ELK virtual machine.
-From our Ansible container, add the new VM to Ansible's hosts file.
-  RUN nano /etc/ansible/hosts and put our IP with ansible_python_interpreter=/usr/bin/python3
+-  Add new VM to the Ansible hosts file.
+-  Create a new Ansible playbook to use for our new ELK virtual machine.
+-  From our Ansible container, add the new VM to Ansible's hosts file.
+    - RUN nano /etc/ansible/hosts and put our IP with ansible_python_interpreter=/usr/bin/python3
+
+![image](https://user-images.githubusercontent.com/106039539/170589285-1a0228cb-b2a1-43c0-bfc6-c0abd2d6376f.png)
+
+In the below play, representing the header of the YAML file, I defined the title of my playbook based on the playbook's main goal by setting the keyword 'name:' to: "Configure Elk VM with Docker". Next, I defined the user account for the SSH connection, by setting the keyword 'remote_user:' to "sysadmin" then activated privilege escalation by setting the keyword 'become:' to "true".
 
 The playbook implements the following tasks:
-- 
-- ...
-- ...
-​
-The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
-​
-**Note**: The following image link needs to be updated. Replace `docker_ps_output.png` with the name of your screenshot image file.  
-​
-​
+        name: Configure Elk VM with Docker
+        hosts: elk
+        remote_user: sysadmin
+        become: true
+        tasks:
+ 
+In this play, the ansible package manager module is tasked with installing docker.io. The keyword 'update_cache:' is set to "yes" to download package information from all configured sources and their dependencies prior to installing docker, it is necessary to successfully install docker in this case. Next the keyword 'state:' is set to "present" to verify that the package is installed.
+
+The playbook implements the following tasks:
+
+                 # Use apt module
+                - name: Install docker.io
+                  apt:
+                    update_cache: yes
+                    name: docker.io
+                    state: present
+                    
+ In this play, the ansible package manager module is tasked with installing 'pip3', a version of the 'pip installer' which is a standard package manager used to install and maintain packages for Python. The keyword 'force_apt_get:' is set to "yes" to force usage of apt-get instead of aptitude. The keyword 'state:' is set to "present" to verify that the package is installed.
+ 
+ The playbook implements the following tasks:
+ 
+               # Use apt module
+            - name: Install pip3
+              apt:
+                force_apt_get: yes
+                name: python3-pip
+                state: present
+                
+  
+In this play the pip installer is used to install docker and also verify afterwards that docker is installed ('state: present').
+
+The playbook implements the following tasks:
+
+              # Use pip module
+            - name: Install Docker python module
+              pip:
+                name: docker
+                state: present
+                
+In this play, the ansible sysctl module configures the target virtual machine (i.e., the Elk server VM) to use more memory. On newer version of Elasticsearch, the max virtual memory areas is likely to be too low by default (ie., 65530) and will result in the following error: "elasticsearch | max virtual memory areas vm.max_map_count [65530] likely too low, increase to at least [262144]", thus requiring the increase of vm.max_map_count to at least 262144 using the sysctl module (keyword 'value:' set to "262144"). The keyword 'state:' is set to "present" to verify that the change was applied. The sysctl command is used to modify Linux kernel variables at runtime, to apply the changes to the virtual memory variables, the new variables need to be reloaded so the keyword 'reload:' is set to "yes" (this is also necessary in case the VM has been restarted).
+
+The playbook implements the following tasks:
+
+             # Use sysctl module
+            - name: Use more memory
+              sysctl:
+                name: vm.max_map_count
+                value: "262144"
+                state: present
+                reload: yes
+
+In this play, the ansible docker_container module is used to download and launch our Elk container. The container is pulled from the docker hub repository. The keyword 'image:' is set with the value "sebp/elk:761", "sebp" is the creator of the container (i.e., Sebastien Pujadas). "elk" is the container and "761" is the version of the container. The keyword 'state:' is set to "started" to start the container upon creation. The keyword 'restart_policy:' is set to "always" and will ensure that the container restarts if we restart our web vm. Without it, we will have to restart our container when we restart the machine. The keyword 'published_ports:' is set with the 3 ports that are used by our Elastic stack configuration, i.e., "5601" is the port used by Kibana, "9200" is the port used by Elasticsearch for requests by default and "5400" is the default port Logstash listens on for incoming Beats connections (we will go over the Beats we installed in the following section "Target Machines & Beats").
+
+
+The playbook implements the following tasks:
+
+              # Use docker_container module
+            - name: download and launch a docker elk container
+              docker_container:
+                name: elk
+                image: sebp/elk:761
+                state: started
+                restart_policy: always
+                published_ports:
+                  - 5601:5601
+                  - 9200:9200
+                  - 5044:5044
+      
+In this play, the ansible systemd module is used to start docker on boot, setting the keyword 'enabled:' to "yes".
+
+          # Use systemd module
+        - name: Enable service docker on boot
+          systemd:
+            name: docker
+            enabled: yes
+                  
 ![TODO: Update the path with the name of your screenshot of docker ps output](Images/docker_ps_output.png)
 ​
 ### Target Machines & Beats
