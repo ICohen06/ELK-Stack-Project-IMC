@@ -9,13 +9,13 @@ These files have been tested and used to generate a live ELK deployment on Azure
 
 ​[Install Elk](https://github.com/ICohen06/ELK-Stack-Project-IMC/blob/main/Ansible/install-elk.yml)
 
-​https://github.com/ICohen06/ELK-Stack-Project-IMC/blob/main/Ansible/filebeat-config.yml
+​[Filebeat-config](https://github.com/ICohen06/ELK-Stack-Project-IMC/blob/main/Ansible/filebeat-config.yml)
 
-​https://github.com/ICohen06/ELK-Stack-Project-IMC/blob/main/Ansible/filebeat-playbook.yml
+​[Filebeat-playbook](https://github.com/ICohen06/ELK-Stack-Project-IMC/blob/main/Ansible/filebeat-playbook.yml)
 
-​https://github.com/ICohen06/ELK-Stack-Project-IMC/blob/main/Ansible/metricbeat-config.yml
+​[Metricbeat-config](https://github.com/ICohen06/ELK-Stack-Project-IMC/blob/main/Ansible/metricbeat-config.yml)
 
-​https://github.com/ICohen06/ELK-Stack-Project-IMC/blob/main/Ansible/metricbeat-playbook.yml
+​[Meticbeat-playbook](https://github.com/ICohen06/ELK-Stack-Project-IMC/blob/main/Ansible/metricbeat-playbook.yml)
 
 
 This document contains the following details:
