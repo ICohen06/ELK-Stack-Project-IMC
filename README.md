@@ -256,19 +256,106 @@ In this play, the ansible systemd module is used to start docker on boot, settin
 ​
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
-- _TODO: List the IP addresses of the machines you are monitoring_
-​
-We have installed the following Beats on these machines:
-- _TODO: Specify which Beats you successfully installed_
-​
+-  Web-1 (DVWA) | 10.1.0.5
+-  Web-2 (DVWA) | 10.1.0.6
+
+I have installed the following Beats on these machines:
+- Filebeat
+- MetricBeat
+
 These Beats allow us to collect the following information from each machine:
-- _TODO: In 1-2 sentences, explain what kind of data each beat collects, and provide 1 example of what you expect to see. E.g., `Winlogbeat` collects Windows logs, which we use to track user logon events, etc._
-​
+
+Filebeat: Filebeat detects changes to the filesystem. I use it to collect system logs and more specifically, I use it to detect SSH login attempts and failed sudo escalations.
+
+We will create a filebeat-config.yml and metricbeat-config.yml configuration files, after which we will create the Ansible playbook files for both of them.
+
+Once we have this file on our Ansible container, edit it as specified:
+
+- The username is elastic and the password is changeme.
+
+- Scroll to line #1106 and replace the IP address with the IP address of our ELK machine. output.elasticsearch: hosts: ["10.1.0.4:9200"] username: "elastic" password:    "changeme"
+
+- Scroll to line #1806 and replace the IP address with the IP address of our ELK machine. setup.kibana: host: "10.1.0.4:5601"
+
+- Save both files filebeat-config.yml and metricbeat-config.yml into /etc/ansible/files/
+
+Next, create a new playbook that installs Filebeat & Metricbeat, and then create a playbook file, filebeat-playbook.yml & metricbeat-playbook.yml
+
+RUN nano filebeat-playbook.yml to enable the filebeat service on boot by Filebeat playbook template below:
+
+    ---
+    - name: Install and Launch Filebeat
+      hosts: webservers
+      become: yes
+      tasks:
+        # Use command module
+      - name: Download filebeat .deb file
+        command: curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.4.0-amd64.deb
+        # Use command module
+      - name: Install filebeat .deb
+        command: dpkg -i filebeat-7.4.0-amd64.deb
+        # Use copy module
+      - name: Drop in filebeat.yml
+        copy:
+          src: /etc/ansible/roles/install-filebeat/files/filebeat-config.yml
+          dest: /etc/filebeat/filebeat.yml
+        # Use command module
+      - name: Enable and Configure System Module
+        command: filebeat modules enable system
+        # Use command module
+      - name: Setup filebeat
+        command: filebeat setup
+        # Use command module
+      - name: Start filebeat service
+        command: service filebeat start
+        # Use systemd module
+      - name: Enable service filebeat on boot
+        systemd:
+          name: filebeat
+          enabled: yes
+ 
+ Metricbeat: Metricbeat detects changes in system metrics, such as CPU usage and memory usage.
+
+RUN nano metricbeat-playbook.yml to enable the metricbeat service on boot by Metricbeat playbook template below:
+
+
+    ---
+    - name: Install and Launch Metricbeat
+      hosts: webservers
+      become: true
+      tasks:
+        # Use command module
+      - name: Download metricbeat
+        command: curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.4.0-amd64.deb
+        # Use command module
+      - name: install metricbeat
+        command: dpkg -i metricbeat-7.4.0-amd64.deb
+        # Use copy module
+      - name: drop in metricbeat config
+        copy:
+          src: /etc/ansible/roles/install-metricbeat/files/metricbeat-config.yml
+          dest: /etc/metricbeat/metricbeat.yml
+        # Use command module
+      - name: enable and configure docker module for metric beat
+        command: metricbeat modules enable docker
+        # Use command module
+      - name: setup metric beat
+        command: metricbeat setup
+        # Use command module
+      - name: start metric beat
+        command: service metricbeat start
+        # Use systemd module
+      - name: Enable service metricbeat on boot
+        systemd:
+          name: metricbeat
+          enabled: yes
+
+
 ### Using the Playbook
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
 ​
 SSH into the control node and follow the steps below:
-- Copy the _____ file to _____.
+- Copy the SSH Key  file to _____.
 - Update the _____ file to include...
 - Run the playbook, and navigate to ____ to check that the installation worked as expected.
 ​
