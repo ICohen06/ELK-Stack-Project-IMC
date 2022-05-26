@@ -88,37 +88,39 @@ The configuration details of each machine may be found below.
 |        ELKServer        	|       Kibana      	|          10.4.0.4          	|         Linux        	|
 |       BlackTeam-LB      	| Load <br>Balancer 	|        20.211.75.214       	|         DVWA         	|
 
-
+In addition to the above, Azure has provisioned a load balancer in front of all machines except for the jump box. The load balancer's targets are organized into availability zones: Web-1 + Web-2
 ​
 ### Access Policies
 ​
 The machines on the internal network are not exposed to the public Internet. 
 ​
-Only the _____ machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
-- _TODO: Add whitelisted IP addresses_
+Only the Jump Box machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses: 20.211.75.214
 ​
-Machines within the network can only be accessed by _____.
-- _TODO: Which machine did you allow to access your ELK VM? What was its IP address?_
+Machines within the network can only be accessed by SSH from Jump Box.
 ​
 A summary of the access policies in place can be found in the table below.
 ​
-| Name     | Publicly Accessible | Allowed IP Addresses |
-|----------|---------------------|----------------------|
-| Jump Box | Yes/No              | 10.0.0.1 10.0.0.2    |
-|          |                     |                      |
-|          |                     |                      |
+| Name                	| Publicly Accessible 	| Allowed IP Addresses 	|
+|---------------------	|---------------------	|----------------------	|
+| Jump-Box Provsioner 	|         Yes         	|     20.211.75.214    	|
+|      ElkServer      	|         Yes         	|  20.211.75.214:5601  	|
+|        DVWA1        	|          No         	|      10.1.0.1-254    	|
+|        DVWA2        	|          No         	|     10.1.0.1-254     	|
 ​
 ### Elk Configuration
 ​
-Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because...
-- _TODO: What is the main advantage of automating configuration with Ansible?_
-​
+Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because Ansible can be used to easily configure new machines, update programs, and configurations on hundreds of servers at once, and the best part is that the process is the same whether we're managing one machine or dozens and even hundreds.
+
+-What is the main advantage of automating configuration with Ansible?
+​ Ansible is focusing on bringing a server to a certain state of operation.
+
 The playbook implements the following tasks:
-- _TODO: In 3-5 bullets, explain the steps of the ELK installation play. E.g., install Docker; download image; etc._
+- 
 - ...
 - ...
 ​
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
+
 ​
 **Note**: The following image link needs to be updated. Replace `docker_ps_output.png` with the name of your screenshot image file.  
 ​
