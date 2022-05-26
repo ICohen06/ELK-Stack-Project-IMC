@@ -80,13 +80,13 @@ What does Metricbeat record?
 
 The configuration details of each machine may be found below.
 
-​|         **Name**        	|    **Function**   	|       **IP Address**       	| **Operating System** 	|
-|:-----------------------:	|:-----------------:	|:--------------------------:	|:--------------------:	|
-| Jump-Box-<br>Provsioner 	|      Gateway      	| 20.213.233.163<br>10.1.0.4 	|         Linux        	|
-|          Web-1          	|     webserver     	|          10.1.0.5          	|         Linux        	|
-|          Web-2          	|     webserver     	|          10.1.0.6          	|         Linux        	|
-|        ELKServer        	|       Kibana      	|          10.4.0.4          	|         Linux        	|
-|       BlackTeam-LB      	| Load <br>Balancer 	|        20.211.75.214       	|         DVWA         	|
+|        **Name**        	|  **Function** 	|       **IP Address**       	| **Operating System** 	|
+|:----------------------:	|:-------------:	|:--------------------------:	|----------------------	|
+| _Jump-Box-Provisioner_ 	|    Gateway    	| 20.212.233.163<br>10.1.0.4 	|         Linux        	|
+|         _Web-1_        	|   webserver   	|          10.1.0.5          	|         Linux        	|
+|         _Web-2_        	|   webserver   	|          10.1.0.6          	|         Linux        	|
+|       _ElkServer_      	|     Kibana    	|          10.4.0.4          	|         Linux        	|
+|     _BlackTeam-LB_     	| Load Balancer 	|        20.211.75.214       	|         DVWA         	|
 
 In addition to the above, Azure has provisioned a load balancer in front of all machines except for the jump box. The load balancer's targets are organized into availability zones: Web-1 + Web-2
 ​
