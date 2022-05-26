@@ -42,7 +42,7 @@ According to Azure security baseline for Azure Load Balancer, the load balancer'
   
     monitor and log the configuration and traffic of virtual networks, subnets, and NICs.
   
-   protect critical web applications
+    protect crticial web applications
   
     deny communications with known malicious IP addresses
   
@@ -79,14 +79,16 @@ What does Metricbeat record?
 ​Filebeat helps keep things simple by offering a lightweight way (low memory footprint) to forward and centralize logs, files and watches for changes.
 
 The configuration details of each machine may be found below.
-_Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdown_tables) to add/remove values from the table_.
-​
-| Name     | Function | IP Address | Operating System |
-|----------|----------|------------|------------------|
-| Jump Box | Gateway  | 10.0.0.1   | Linux            |
-| TODO     |          |            |                  |
-| TODO     |          |            |                  |
-| TODO     |          |            |                  |
+
+​|         **Name**        	|    **Function**   	|       **IP Address**       	| **Operating System** 	|
+|:-----------------------:	|:-----------------:	|:--------------------------:	|:--------------------:	|
+| Jump-Box-<br>Provsioner 	|      Gateway      	| 20.213.233.163<br>10.1.0.4 	|         Linux        	|
+|          Web-1          	|     webserver     	|          10.1.0.5          	|         Linux        	|
+|          Web-2          	|     webserver     	|          10.1.0.6          	|         Linux        	|
+|        ELKServer        	|       Kibana      	|          10.4.0.4          	|         Linux        	|
+|       BlackTeam-LB      	| Load <br>Balancer 	|        20.211.75.214       	|         DVWA         	|
+
+
 ​
 ### Access Policies
 ​
