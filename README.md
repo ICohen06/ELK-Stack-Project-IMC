@@ -1,9 +1,12 @@
+![d39c6108c4b9319b761479dc5a201775](https://user-images.githubusercontent.com/106039539/170610633-217921bb-77c1-4390-bf18-b360c5e0c3b9.jpeg)
+
 # ELK-Stack-Project-IMC
 The files in this repository were used to configure the network depicted below.
-​
+    
 **Note**: The following image link needs to be updated. Replace `diagram_filename.png` with the name of your diagram image file.  
 ​
-![TODO: Update the path with the name of your diagram](Images/diagram_filename.png)
+![Screen Shot 2022-05-26 at 8 26 17 PM](https://user-images.githubusercontent.com/106039539/170610392-9ce393e4-4427-4d56-9e52-71ba3b1983ea.png)
+
 
 These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the YAML file may be used to install only certain pieces of it, such as Filebeat and MetricBeat.
 
@@ -253,7 +256,9 @@ In this play, the ansible systemd module is used to start docker on boot, settin
             enabled: yes
                   
 ![TODO: Update the path with the name of your screenshot of docker ps output](Images/docker_ps_output.png)
-​
+
+![Screen Shot 2022-05-14 at 11 17 50 PM (2)](https://user-images.githubusercontent.com/106039539/170610583-f75438c0-94d8-49d9-8092-112d16d0efec.png)
+
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
 -  Web-1 (DVWA) | 10.1.0.5
